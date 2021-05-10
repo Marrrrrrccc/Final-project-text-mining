@@ -13,7 +13,8 @@ def counter(extension):
             words[remove] = words.get(remove, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
             for w, c in words.items():#print lang pero di to gagawin graph dapat
-                print("%s: %d times" % (w, c))
+                if len(w) > 3:  # if less than 3 word sya #note:pwede to tanggalin kung ano na lng trip nyo
+                    print("%s: %d times" % (w, c))
 
     elif extension.__contains__(".txt"):
 
@@ -25,8 +26,10 @@ def counter(extension):
             for b in remove.split():
                 words[b] = words.get(b,0) + 1 # transform file to dict  # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
+
             for w, c in words.items():#print lang pero di to gagawin graph dapat
-                print("%s: %d times" % (w, c))
+                if len(w) > 3:# if less than 3 word sya #note:pwede to tanggalin kung ano na lng trip nyo
+                    print("%s: %d times" % (w, c))
 
 
 counter(filename)
