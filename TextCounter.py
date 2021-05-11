@@ -6,15 +6,13 @@ from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfpage import PDFPage
 
-filename = str(input("Enter file name"))
+filename = str(input("Enter file name: "))
 def counter(extension):
 
     if extension.__contains__('.docx') or extension.__contains__('.doc'):
         doc = docx2txt.process(filename)  # extract docx to text
-        # open connection to Word Document
         logic(doc)
     elif extension.__contains__(".pdf"):
-        words = {}
         logic(extract_text(filename))
 
 def extract_text_by_page(filename):
@@ -40,7 +38,8 @@ def extract_text(filename):
 def logic(string):
 
     words = {}
-    remove = " ".join(re.findall(r"[a-zA-Z0-9]+", string)).lower()  # tanggal special character
+    remove = re.sub('[!,*)@#%(&$_?.\]\[^]', '', string).lower()# tanggal special character
+    #remove = " ".join(re.findall(r"[a-zA-Z0-9]+", string)).lower()
     for word in remove.split():  # para kada space isang word
 
         words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
