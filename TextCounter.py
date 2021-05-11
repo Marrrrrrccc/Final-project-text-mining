@@ -1,52 +1,139 @@
 import docx2txt
 import re
 import io
+import matplotlib.pyplot as plt
+import numpy as np
+import random
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfpage import PDFPage
 
-filename = str(input("Enter file name: "))
 def counter(extension):
+    global decision
+    global filename
 
     if extension.__contains__('.docx') or extension.__contains__('.doc'):
-        doc = docx2txt.process(filename)  # extract docx to text
-        logic(doc)
+        try: #Used to check if file exists or not
+            doc = docx2txt.process(filename)  # extract docx to text
+            logic(doc)
+        except FileNotFoundError as error:   
+            print("File does not exist. Enter an existing file.")
+            filename = ""
+            decision = 1
+
     elif extension.__contains__(".pdf"):
         logic(extract_text(filename))
+    elif extension.__contains__('.docx') == False or extension.__contains__('.doc') == False or extension.__contains__(".pdf") == False: #Checks if the format of entered value is correct
+        print("Enter a valid filename.")
+        decision = 1
 
 def extract_text_by_page(filename):
-    with open(r""+filename, 'rb') as fh:
-        for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
-            resource_manager = PDFResourceManager()
-            fake_file_handle = io.StringIO()
-            converter = TextConverter(resource_manager, fake_file_handle)
-            page_interpreter = PDFPageInterpreter(resource_manager, converter)
-            page_interpreter.process_page(page)
+    try: #Used to check if file exists or not
+        with open(r""+filename, 'rb') as fh:
+            for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
+                resource_manager = PDFResourceManager()
+                fake_file_handle = io.StringIO()
+                converter = TextConverter(resource_manager, fake_file_handle)
+                page_interpreter = PDFPageInterpreter(resource_manager, converter)
+                page_interpreter.process_page(page)
 
-            text = fake_file_handle.getvalue()
-            yield text
+                text = fake_file_handle.getvalue()
+                yield text
 
-            # close open handles
-            converter.close()
-            fake_file_handle.close()
-
+                # close open handles
+                converter.close()
+                fake_file_handle.close()
+    except FileNotFoundError as error:
+        global decision
+        print("File does not exist. Enter an existing file.")
+        filename = ""
+        decision = 1
+        
 
 def extract_text(filename):
     for page in extract_text_by_page(filename):
         return page
-def logic(string):
 
-    words = {}
-    remove = re.sub('[!,*)@#%(&$_?.\]\[^]', '', string).lower()# tanggal special character
-    #remove = " ".join(re.findall(r"[a-zA-Z0-9]+", string)).lower()
-    for word in remove.split():  # para kada space isang word
-        words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
+def logic(document):
+    global words
+    try: #Ignores the Exception found when handling another exception which is displayed when the program ends
+        remove = re.sub('[!,*)@#%(&$_?.\]\[^]', '', document).lower()# tanggal special character
+        #remove = " ".join(re.findall(r"[a-zA-Z0-9]+", string)).lower()
+        for word in remove.split():  # para kada space isang word
+            words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
-    for w, c in words.items():  # print lang pero di to gagawin graph dapat
-        if len(w) > 1 or (len(w) > 0 and (w==('a'.lower()) or w == ('i').lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
-            print("%s: %d times" % (w, c))
+        for Item, Count in words.items():  # print lang pero di to gagawin graph dapat
+            if len(Item) > 1 or (len(Item) > 0 and (Item==('a'.lower()) or Item == ('i').lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
+                print("%s: %d times" % (Item, Count))
 
+    except:
+        pass
 
+def displayGraphs():
+    global words
+    x = []
+    y = []
+    rgb = []
+    for Word, Count in words.items():
+        x.append(Word)
+        y.append(Count)
+        rgb.append([random.random(), random.random(), random.random()]) #Generates a random numbers for the colors of the plots
+        
+    scatter = plt.figure(1)
+    plt.scatter(x, y, c = rgb) #Scatter plot
+    plt.title('Scatter Plot for the File', fontsize = 18)
+    plt.ylabel('Amount of times the words are repeated', fontsize = 18)
+    plt.xlabel('Words found in the File', fontsize = 18)
+    plt.xticks(fontsize=9, rotation=85, ha="center")
+    plt.margins(x=0)
+    plt.tight_layout()
+    mng = plt.get_current_fig_manager()
+    mng.resize(1920, 1080)
 
-counter(filename)
+    bar = plt.figure(2)
+    plt.bar(x, y, color = rgb) #Bar Graph
+    plt.title('Bar Graph for the File', fontsize = 18)
+    plt.ylabel('Amount of times the words are repeated', fontsize = 18)
+    plt.xlabel('Words found in the File', fontsize = 18)
+    plt.xticks(fontsize=9, rotation=85, ha="center")
+    plt.margins(x=0)
+    plt.tight_layout()
+    mng = plt.get_current_fig_manager()
+    mng.resize(1920, 1080)
+    
+    scatter.show()
+    bar.show()
+
+repeat = 0
+out = 1
+decision = 0
+filename = ""
+words = {}
+
+while (repeat == 0):
+    filename = str(input("\nEnter file name: "))
+    counter(filename)
+    if decision != 1: #Helps determine if the filename entered is wrong or not and repeats the entering of file name if necessary
+        pass
+    else:
+        decision = 0
+        continue
+    
+    displayGraphs()
+
+    while True:
+        outcome = str(input("\nWould you like to enter another? (Y,N): ")).lower()
+        try:
+            assert(outcome in ['y', 'n'])
+            break
+        except:
+            print('\nInvalid Input. Please enter only Y or N.')
+
+    if (outcome == 'y'):
+        continue
+
+    elif (outcome == 'n'):
+        print("\n\n     Thank you for using our program. \n\n\t-------------------------\n\t|Made by:\t\t| \n\t|Marc Ricafort\t\t| \n\t|Stanley Orong III\t| \n\t|Patricia Valenzuela\t| \n\t|Cyril Verdad\t\t| \n\t|From 3-ITG\t\t| \n\t-------------------------\n")
+        break
+    
