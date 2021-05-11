@@ -41,13 +41,11 @@ def logic(string):
     remove = re.sub('[!,*)@#%(&$_?.\]\[^]', '', string).lower()# tanggal special character
     #remove = " ".join(re.findall(r"[a-zA-Z0-9]+", string)).lower()
     for word in remove.split():  # para kada space isang word
-
         words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
     for w, c in words.items():  # print lang pero di to gagawin graph dapat
-        if len(w) > 1 or (len(w) > 0 and w==('a'.lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
+        if len(w) > 1 or (len(w) > 0 and (w==('a'.lower()) or w == ('i').lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
             print("%s: %d times" % (w, c))
-
 
 
 
