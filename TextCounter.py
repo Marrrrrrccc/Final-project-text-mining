@@ -52,8 +52,10 @@ def extract_text_by_page(filename):
         
 
 def extract_text(filename):
+    noOfPage = 0
     for page in extract_text_by_page(filename):
-        yield page
+        noOfPage += page
+    return noOfPage
 
 def logic(document):
     global words
