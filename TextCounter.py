@@ -52,7 +52,7 @@ def extract_text_by_page(filename):
         
 
 def extract_text(filename):
-    noOfPage = 0
+    noOfPage = ''
     for page in extract_text_by_page(filename):
         noOfPage += page
     return noOfPage
