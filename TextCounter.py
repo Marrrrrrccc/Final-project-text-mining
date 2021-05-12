@@ -121,6 +121,7 @@ while (repeat == 0):
         continue
     
     displayGraphs()
+    words = {}
 
     while True:
         outcome = str(input("\nWould you like to enter another? (Y,N): ")).lower()
