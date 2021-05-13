@@ -60,7 +60,7 @@ def extract_text(filename):
 def logic(document):
     global words
     try: #Ignores the Exception found when handling another exception which is displayed when the program ends
-        remove = re.sub('[!,*)@#%(&$_?.\]\[^]', '', document).lower()# tanggal special character
+        remove = re.sub('[!,*)@#%(&$_/?.\]\[^]', '', document).lower()# tanggal special character
         for word in remove.split():  # para kada space isang word
             words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
