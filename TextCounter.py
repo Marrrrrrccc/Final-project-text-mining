@@ -99,7 +99,7 @@ def displayGraphs():
     plt.ylabel('Amount of times the words are repeated', fontsize = 18)
     plt.xlabel('Words found in the File', fontsize = 18)
     plt.xticks(fontsize=9, rotation=60, ha="right")
-    plt.margins(x=-0)
+    plt.margins(x=0)
     plt.tight_layout()
     plt.xlim(0,50)
     mng = plt.get_current_fig_manager()
