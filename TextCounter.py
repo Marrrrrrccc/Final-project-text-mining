@@ -28,22 +28,22 @@ def counter(extension):
         print("Enter a valid filename.")
         decision = 1
 
-def extract_text_by_page(filename):
+def extract_by_page(filename):
     try: #Used to check if file exists or not
         with open(r""+filename, 'rb') as fh:
             for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
-                resource_manager = PDFResourceManager()
-                fake_file_handle = io.StringIO()
-                converter = TextConverter(resource_manager, fake_file_handle)
-                page_interpreter = PDFPageInterpreter(resource_manager, converter)
-                page_interpreter.process_page(page)
+                res_manager = PDFResourceManager()
+                fake_file = io.StringIO()
+                convert = TextConverter(res_manager, fake_file)
+                interpreter = PDFPageInterpreter(res_manager, convert)
+                interpreter.process_page(page)
 
-                text = fake_file_handle.getvalue()
+                text = fake_file.getvalue()
                 yield text
 
                 # close open handles
-                converter.close()
-                fake_file_handle.close()
+                convert.close()
+                fake_file.close()
     except FileNotFoundError as error:
         global decision
         print("File does not exist. Enter an existing file.")
@@ -51,9 +51,9 @@ def extract_text_by_page(filename):
         decision = 1
         
 
-def extract_text(filename):
+def extract_text(file):
     noOfPage = ''
-    for page in extract_text_by_page(filename):
+    for page in extract_by_page(file):
         noOfPage += page
     return noOfPage
 
