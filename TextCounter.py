@@ -95,12 +95,13 @@ def displayGraphs():
     ymax = max(y) #max value
     xpos = y.index(ymax) #x pos ng max
     xmax = x[xpos]  
-    ax.annotate(xmax, xy=(xmax, ymax), xytext=(xmax, ymax+5),
-    arrowprops=dict(arrowstyle="->", connectionstyle="arc3"),) # annotate arrow  
+    ax.annotate('Highest word count', xy=(xmax, ymax), xytext=(xmax, ymax+7),
+    arrowprops=dict(arrowstyle="->"), va = 'center') # annotate arrow  
     mng = plt.get_current_fig_manager()
     mng.resize(1920, 1080)
 
     bar = plt.figure(2)
+    ax = bar.add_subplot(111)
     plt.bar(x, y, color = rgb) #Bar Graph
     plt.title('Bar Graph for the File', fontsize = 18)
     plt.ylabel('Amount of times the words are repeated', fontsize = 18)
@@ -109,6 +110,12 @@ def displayGraphs():
     plt.margins(x=0)
     plt.tight_layout()
     plt.xlim(0,50)
+    plt.ylim(0, 100)
+    ymax = max(y) #max value
+    xpos = y.index(ymax) #x pos ng max
+    xmax = x[xpos]  
+    ax.annotate('Highest word count', xy=(xmax, ymax), xytext=(xmax, ymax+7),
+    arrowprops=dict(arrowstyle="->"))
     mng = plt.get_current_fig_manager()
     mng.resize(1920, 1080)
     
