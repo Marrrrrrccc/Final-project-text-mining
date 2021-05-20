@@ -2,7 +2,6 @@ import docx2txt
 import re
 import io
 import matplotlib.pyplot as plt
-import numpy as np
 import random
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
