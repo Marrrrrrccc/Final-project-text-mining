@@ -82,6 +82,7 @@ def displayGraphs():
         rgb.append([random.random(), random.random(), random.random()]) #Generates a random numbers for the colors of the plots
         
     scatter = plt.figure(1)
+    ax = scatter.add_subplot(111)
     plt.scatter(x, y, c = rgb) #Scatter plot
     plt.title('Scatter Plot for the File', fontsize = 18)
     plt.ylabel('Amount of times the words are repeated', fontsize = 18)
@@ -90,6 +91,12 @@ def displayGraphs():
     plt.margins(x=0)
     plt.tight_layout()
     plt.xlim(0,50)
+    plt.ylim(0, 100)
+    ymax = max(y) #max value
+    xpos = y.index(ymax) #x pos ng max
+    xmax = x[xpos]  
+    ax.annotate(xmax, xy=(xmax, ymax), xytext=(xmax, ymax+5),
+    arrowprops=dict(arrowstyle="->", connectionstyle="arc3"),) # annotate arrow  
     mng = plt.get_current_fig_manager()
     mng.resize(1920, 1080)
 
