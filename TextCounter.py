@@ -109,9 +109,9 @@ out = 1
 decision = 0
 filename = ""
 words = {}
-
+print("\nHey there! Welcome to the Word Frequency Generator")
 while (repeat == 0):
-    filename = str(input("\nEnter file name: "))
+    filename = str(input("\nPlease Enter your file name: "))
     counter(filename)
     if decision != 1: #Helps determine if the filename entered is wrong or not and repeats the entering of file name if necessary
         pass
