@@ -67,7 +67,7 @@ def logic(document):
         for Item, Count in words.items():  # print lang pero di to gagawin graph dapat
             if len(Item) > 1 or (len(Item) > 0 and (Item==('a'.lower()) or Item == ('i').lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
                 print("%s: %d times" % (Item, Count))
-
+        print("\nGenerating Graph...")
     except:
         pass
 
