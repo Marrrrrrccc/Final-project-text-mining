@@ -3,6 +3,7 @@ import re
 import io
 import matplotlib.pyplot as plt
 import random
+import pandas as pd
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
@@ -63,9 +64,8 @@ def logic(document):
         for word in remove.split():  # para kada space isang word
             words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
 
-        for Item, Count in words.items():  # print lang pero di to gagawin graph dapat
-            if len(Item) > 1 or (len(Item) > 0 and (Item==('a'.lower()) or Item == ('i').lower())): # if less than 3 letter sya #note:pwede to tanggalin kung ano na lng trip nyo
-                print("%s: %d times" % (Item, Count))
+        df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])
+        print(df)
         print("\nGenerating Graph...")
     except:
         pass
