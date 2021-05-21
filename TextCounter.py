@@ -13,7 +13,7 @@ def counter(extension):
     global decision
     global filename
 
-    if extension.__contains__('.docx') or extension.__contains__('.doc'):
+    if extension.__contains__('.docx') or extension.__contains__('.doc'):#checks if the extension is docx
         try: #Used to check if file exists or not
             doc = docx2txt.process(filename)  # extract docx to text
             logic(doc)
@@ -22,7 +22,7 @@ def counter(extension):
             filename = ""
             decision = 1
 
-    elif extension.__contains__(".pdf"):
+    elif extension.__contains__(".pdf"):#checks if the extension is pdf
         logic(extract_text(filename))
     elif extension.__contains__('.docx') == False or extension.__contains__('.doc') == False or extension.__contains__(".pdf") == False: #Checks if the format of entered value is correct
         print("Enter a valid filename.")
@@ -60,11 +60,11 @@ def extract_text(file):
 def logic(document):
     global words
     try: #Ignores the Exception found when handling another exception which is displayed when the program ends
-        remove = re.sub('[!,\“*)@#%\"(&$_/?.\]\[^]', '', document).lower()# tanggal special character
-        for word in remove.split():  # para kada space isang word
-            words[word] = words.get(word, 0) + 1  # transform file to dict # dict kasi para makuha yung key example (2:"the") means two time lumabas yung the
+        remove = re.sub('[!,\“*)@#%\"(&$_/?.\]\[^]', '', document).lower()# remove special character
+        for word in remove.split():  # 1 word per space
+            words[word] = words.get(word, 0) + 1  # Each word that can be seen the counter adds one
 
-        df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])
+        df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])#dictionary to dataframe
         print(df)
         print("\nGenerating Graph...")
     except:
@@ -76,8 +76,8 @@ def displayGraphs():
     y = []
     rgb = []
     for Word, Count in words.items():
-        x.append(Word)
-        y.append(Count)
+        x.append(Word) # put the words to x axis
+        y.append(Count) # put the count to y axis
         rgb.append([random.random(), random.random(), random.random()]) #Generates a random numbers for the colors of the plots
         
 
@@ -104,7 +104,6 @@ def displayGraphs():
     bar.show()
 
 repeat = 0
-out = 1
 decision = 0
 filename = ""
 words = {}
