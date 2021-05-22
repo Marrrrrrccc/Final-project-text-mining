@@ -63,10 +63,10 @@ def logic(document):
         remove = re.sub('[!,\“*)@#%\"(&$_/?.\]\[^]', '', document).lower()# remove special character
         for word in remove.split():  # 1 word per space
             words[word] = words.get(word, 0) + 1  # Each word that can be seen the counter adds one
-
-        df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])#dictionary to dataframe
-        print(df)
-        
+        if words:
+            df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])#dictionary to dataframe
+            print(df)
+            print("\nGenerating Graph...")
     except:
         pass
 
