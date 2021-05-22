@@ -66,7 +66,7 @@ def logic(document):
 
         df = pd.DataFrame(list(words.items()),columns = ['Words','Count'])#dictionary to dataframe
         print(df)
-        print("\nGenerating Graph...")
+        
     except:
         pass
 
