@@ -25,7 +25,7 @@ def counter(extension):
     elif extension.__contains__(".pdf"):#checks if the extension is pdf
         logic(extract_text(filename))
     elif extension.__contains__('.docx') == False or extension.__contains__('.doc') == False or extension.__contains__(".pdf") == False: #Checks if the format of entered value is correct
-        print("Enter a valid filename.")
+        print("Please enter a valid filename along with its extension.")
         decision = 1
 
 def extract_by_page(filename):
@@ -100,15 +100,13 @@ def displayGraphs():
     mng = plt.get_current_fig_manager()
     mng.resize(1920, 1080)
     
-    
     bar.show()
 
-repeat = 0
 decision = 0
 filename = ""
 words = {}
 print("\nHey there! Welcome to the Word Frequency Generator")
-while (repeat == 0):
+while True:
     filename = str(input("\nPlease Enter your file name: "))
     counter(filename)
     if decision != 1: #Helps determine if the filename entered is wrong or not and repeats the entering of file name if necessary
