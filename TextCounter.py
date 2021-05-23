@@ -13,7 +13,7 @@ def counter(extension):
     global decision
     global filename
 
-    if extension.__contains__('.docx') or extension.__contains__('.doc'):#checks if the extension is docx
+    if extension.__contains__('.docx'):#checks if the extension is docx
         try: #Used to check if file exists or not
             doc = docx2txt.process(filename)  # extract docx to text
             logic(doc)
@@ -24,7 +24,7 @@ def counter(extension):
 
     elif extension.__contains__(".pdf"):#checks if the extension is pdf
         logic(extract_text(filename))
-    elif extension.__contains__('.docx') == False or extension.__contains__('.doc') == False or extension.__contains__(".pdf") == False: #Checks if the format of entered value is correct
+    elif extension.__contains__('.docx') == False or extension.__contains__(".pdf") == False: #Checks if the format of entered value is correct
         print("Please enter a valid filename along with its extension.")
         decision = 1
 
